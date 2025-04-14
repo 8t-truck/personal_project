@@ -152,9 +152,9 @@ const Money operator -(const Money& amount)
 {
     return Money(-amount.dollars, -amount.cents);
 }
-//a. <,<=,>,>=ÀÇ ¿¬»êÀÚ overloading
-//Money ÇüÅÂÀÇ class¸¦ ¸Å°³º¯¼ö·Î ÀÔ·Â¹Ş°í ÀÔ·Â¹ŞÀº °´Ã¼ÀÇ ¸â¹öº¯¼ö dollars¿Í cents¸¦ ¼ø¼­´ë·Î ºñ±³ÇÏ¿© °¢ ÇÔ¼ö¿¡ ¸Â°Ô return ÇÔ
-//¿©±â¼­ dollars¿Í cents´Â privateÀ¸·Î ¼±¾ğµÇ¾î ÀÖ¾ú±â ¶§¹®¿¡ friend ¼±¾ğÀ» Money ³»ºÎ¿¡ ÇØÁÖ¸é¼­ Àü¿ªÇÔ¼öÀÎ ¾Æ·¡ ÇÔ¼öµéÀÌ private¿¡ Á¢±Ù°¡´ÉÇÏ°Ô ÇÔ
+//a. <,<=,>,>=ì˜ ì—°ì‚°ì overloading
+//Money í˜•íƒœì˜ classë¥¼ ë§¤ê°œë³€ìˆ˜ë¡œ ì…ë ¥ë°›ê³  ì…ë ¥ë°›ì€ ê°ì²´ì˜ ë©¤ë²„ë³€ìˆ˜ dollarsì™€ centsë¥¼ ìˆœì„œëŒ€ë¡œ ë¹„êµí•˜ì—¬ ê° í•¨ìˆ˜ì— ë§ê²Œ return í•¨
+//ì—¬ê¸°ì„œ dollarsì™€ centsëŠ” privateìœ¼ë¡œ ì„ ì–¸ë˜ì–´ ìˆì—ˆê¸° ë•Œë¬¸ì— friend ì„ ì–¸ì„ Money ë‚´ë¶€ì— í•´ì£¼ë©´ì„œ ì „ì—­í•¨ìˆ˜ì¸ ì•„ë˜ í•¨ìˆ˜ë“¤ì´ privateì— ì ‘ê·¼ê°€ëŠ¥í•˜ê²Œ í•¨
 
 bool operator <(const Money& amount1, const Money& amount2)
 {
@@ -234,9 +234,9 @@ int Money::round(double number) const
 }
 //b.
 /*
-¹İÈ¯ÇÒ reult¸¦ ¼±¾ğÇÏ°í tempMoney¿¡ ±âÁ¸ÀÇ amount moeny¿¡ percent¸¦ ¹İ¿µÇÏ¿© Áı¾î ³Ö´Â´Ù.
-ÀÌÈÄ·Î´Â MoneyÀÇ >>operator ÇÔ¼ö¸¦ Âü°íÇÏ¿© dollars part ¿Í cents part¸¦ result¿¡ ÀúÀå.
-reult ¹İÈ¯.
+ë°˜í™˜í•  reultë¥¼ ì„ ì–¸í•˜ê³  tempMoneyì— ê¸°ì¡´ì˜ amount moenyì— percentë¥¼ ë°˜ì˜í•˜ì—¬ ì§‘ì–´ ë„£ëŠ”ë‹¤.
+ì´í›„ë¡œëŠ” Moneyì˜ >>operator í•¨ìˆ˜ë¥¼ ì°¸ê³ í•˜ì—¬ dollars part ì™€ cents partë¥¼ resultì— ì €ì¥.
+reult ë°˜í™˜.
 */
 const Money Money::percent(int percentFigure) const
 {
