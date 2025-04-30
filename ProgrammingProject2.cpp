@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <cstdlib>
 using namespace std;
 
 class Rational
@@ -18,28 +19,84 @@ public:
 	int getDenominator() const;
 
 	//operator overload
+	friend int gcd(int a, int b);
+	friend void reduceFraction(int& numerator, int& denominator);
 	friend ostream& operator<<(ostream& out, const Rational& r);//clear
 	friend istream& operator>>(istream& in, Rational& r);//clear
 };
 
+int main(void)
+{
+	int n, d;
+	cin >> n >> d;
+	Rational test(n, d);
+	cout << test;
+	return 0;
+}
+
 Rational::Rational()
 	:numerator(0),denominator(1)
 {
+	normalize();
 }//clear
 
 Rational::Rational(int wholeNumber)
 	:numerator(wholeNumber),denominator(1)
 {
+	normalize();
 }//clear
 
 Rational::Rational(int num, int demon)
 	:numerator(num),denominator(demon)
 {
+	normalize();
 }//clear
+int gcd(int a, int b)
+{
+	a = abs(a);
+	b = abs(b);
+	while (b != 0) {
+		int r = a % b;
+		a = b;
+		b = r;
+	}
+	return a;
+}
+void reduceFraction(int& numerator, int& denominator)
+{
+	if (numerator == 0) {
+		denominator = 1; // 0ì¼ ë• 0/1ë¡œ ì²˜ë¦¬
+		return;
+	}
+
+	int g = gcd(numerator, denominator);
+	numerator /= g;
+	denominator /= g;
+
+	// ë¶„ëª¨ë¥¼ ì–‘ìˆ˜ë¡œ ìœ ì§€ (ë¶€í˜¸ë¥¼ ë¶„ìë¡œ ë„˜ê¹€)
+	if (denominator < 0) {
+		numerator = -numerator;
+		denominator = -denominator;
+	}
+}
 void Rational::normalize()
 {
+	//ìŒì–‘ íŒì •
+	if ((numerator < 0) ^ (denominator < 0))
+	{
+		numerator = -abs(numerator);
+		denominator = abs(denominator);
+	}
+	else if ((numerator < 0) && (denominator < 0))
+	{
+		numerator = abs(numerator);
+		denominator = abs(denominator);
+	}
+	//ìœ í´ë¦¬ë“œ í˜¸ì œë²•ì„ ì´ìš©í•œ ì•½ë¶„í•¨ìˆ˜ êµ¬í•˜ê¸°
+	reduceFraction(numerator, denominator);
+}
 
-}//´ë±â¤Ó¤Ó¤Ó¤Ó¤Ó¤Ó¤Ó¤Ó¤Ó¤Ó¤Ó
+
 int Rational::getNumerator() const
 {
 	return numerator;
@@ -48,17 +105,17 @@ int Rational::getDenominator() const
 {
 	return denominator;
 }
-ostream& operator<<(ostream& out, const Rational& r)		//C++ °³Ã¼¿¡ ¸â¹ö ÇÔ¼ö°ú(¿Í) È£È¯µÇÁö ¾Ê´Â Çü½Ä ÇÑÁ¤ÀÚ°¡ ÀÖ½À´Ï´Ù. The object has type qualifiers that are not compatible with the member function C++
-{															//constÇÔ¼ö°¡ ¾Æ´Ñ ÇÔ¼ö°¡ constÇÔ¼ö¸¦ °¡Á®¿È
+ostream& operator<<(ostream& out, const Rational& r)		//C++ ê°œì²´ì— ë©¤ë²„ í•¨ìˆ˜ê³¼(ì™€) í˜¸í™˜ë˜ì§€ ì•ŠëŠ” í˜•ì‹ í•œì •ìê°€ ìˆìŠµë‹ˆë‹¤. The object has type qualifiers that are not compatible with the member function C++
+{															//constí•¨ìˆ˜ê°€ ì•„ë‹Œ í•¨ìˆ˜ê°€ constí•¨ìˆ˜ë¥¼ ê°€ì ¸ì˜´
 	out << r.getNumerator() << '/' << r.getDenominator();
 
 	return out;
 }//clear
 istream& operator>>(istream& in, Rational& r)
 /*
-stringÀ¸·Î ÀÔ·ÂÀ» ¹Ş°í 
-/¸¦ ±âÁØÀ¸·Î ¾ÕµÚ¸¦ string_to_int·Î °¢°¢ numerator, denominator·Î ºĞ¹è
-¾àºĞÀº ³ªÁß¿¡ »ı°¢ÇÒ°Ô...
+stringìœ¼ë¡œ ì…ë ¥ì„ ë°›ê³  
+/ë¥¼ ê¸°ì¤€ìœ¼ë¡œ ì•ë’¤ë¥¼ string_to_intë¡œ ê°ê° numerator, denominatorë¡œ ë¶„ë°°
+ì•½ë¶„ì€ ë‚˜ì¤‘ì— ìƒê°í• ê²Œ...
 */
 {
 	string input;
@@ -68,7 +125,7 @@ stringÀ¸·Î ÀÔ·ÂÀ» ¹Ş°í
 	int slashPos = input.find('/');
 
 	if (slashPos == string::npos) {
-		// '/'°¡ ¾øÀ¸¸é Àß¸øµÈ ÀÔ·Â
+		// '/'ê°€ ì—†ìœ¼ë©´ ì˜ëª»ëœ ì…ë ¥
 		in.setstate(ios::failbit);
 		return in;
 	}
@@ -84,18 +141,20 @@ stringÀ¸·Î ÀÔ·ÂÀ» ¹Ş°í
 			in.setstate(ios::failbit);
 			return in;
 		}
-		/*if (num * denom < 0)
+		/*
+		if (num * denom < 0)
 		{
-			¿©±â¼­ À½¾çÀ» µûÁö±â º¸´Ù´Â 
-			¾Æ·¡ normalize ÇÔ¼ö¿¡¼­ À½¾çÀ» °°ÀÌ µûÁö´Â°Ô
-			´õ ÁÁÀ» µí
-		}*/
+			ì—¬ê¸°ì„œ ìŒì–‘ì„ ë”°ì§€ê¸° ë³´ë‹¤ëŠ” 
+			ì•„ë˜ normalize í•¨ìˆ˜ì—ì„œ ìŒì–‘ì„ ê°™ì´ ë”°ì§€ëŠ”ê²Œ
+			ë” ì¢‹ì„ ë“¯
+		}
+		*/
 		r.numerator = num;
 		r.denominator = denom;
-		r.normalize();	//¾ÆÁ÷ ±¸Çö ¾ÈÇÔ
+		r.normalize();	//ì•„ì§ êµ¬í˜„ ì•ˆí•¨
 	}
 	catch (...) {
-		// stoi ½ÇÆĞ ½Ã (¿¹: "a/3") ÀÔ·Â ½ÇÆĞ Ã³¸®
+		// stoi ì‹¤íŒ¨ ì‹œ (ì˜ˆ: "a/3") ì…ë ¥ ì‹¤íŒ¨ ì²˜ë¦¬
 		in.setstate(std::ios::failbit);
 	}
 
