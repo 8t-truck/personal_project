@@ -30,7 +30,7 @@ private:
 
 };
 int main() {
-    // ±âº» »ı¼ºÀÚ Å×½ºÆ®
+    // ê¸°ë³¸ ìƒì„±ì í…ŒìŠ¤íŠ¸
     CharPair cp1;
     cout << "cp1 (default constructor): ";
     for (int i = 0; i < 10; i++) {
@@ -38,7 +38,7 @@ int main() {
     }
     cout << endl;
 
-    // µÎ ¹øÂ° »ı¼ºÀÚ Å×½ºÆ® (size¸¸ ÁÖ´Â »ı¼ºÀÚ)
+    // ë‘ ë²ˆì§¸ ìƒì„±ì í…ŒìŠ¤íŠ¸ (sizeë§Œ ì£¼ëŠ” ìƒì„±ì)
     CharPair cp2(5);
     cout << "cp2 (size 5): ";
     for (int i = 0; i < 5; i++) {
@@ -46,7 +46,7 @@ int main() {
     }
     cout << endl;
 
-    // ¼¼ ¹øÂ° »ı¼ºÀÚ Å×½ºÆ® (size + ¹è¿­ Àü´Ş)
+    // ì„¸ ë²ˆì§¸ ìƒì„±ì í…ŒìŠ¤íŠ¸ (size + ë°°ì—´ ì „ë‹¬)
     char sample[] = { 'A', 'B', 'C', 'D', 'E' };
     CharPair cp3(5, sample);
     cout << "cp3 (custom array): ";
@@ -55,7 +55,7 @@ int main() {
     }
     cout << endl;
 
-    // operator[] Å×½ºÆ®: °ª º¯°æ
+    // operator[] í…ŒìŠ¤íŠ¸: ê°’ ë³€ê²½
     cp3[0] = 'Z';
     cout << "cp3 after modifying first element: ";
     for (int i = 0; i < 5; i++) {
@@ -63,8 +63,8 @@ int main() {
     }
     cout << endl;
 
-    // °æ°è°ª Å×½ºÆ® (¿¡·¯ ¹ß»ı È®ÀÎ)
-    // cp3[5] = 'X'; // ÁÖ¼® ÇØÁ¦ ½Ã ¿À·ù ¸Ş½ÃÁö Ãâ·Â & ÇÁ·Î±×·¥ Á¾·á
+    // ê²½ê³„ê°’ í…ŒìŠ¤íŠ¸ (ì—ëŸ¬ ë°œìƒ í™•ì¸)
+    // cp3[5] = 'X'; // ì£¼ì„ í•´ì œ ì‹œ ì˜¤ë¥˜ ë©”ì‹œì§€ ì¶œë ¥ & í”„ë¡œê·¸ë¨ ì¢…ë£Œ
 
     return 0;
 }
